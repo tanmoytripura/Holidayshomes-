@@ -1,0 +1,94 @@
+<!-- ai_recommendation.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Recommendations</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('/static/images/bg1.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 8px;
+        }
+        h1 {
+            text-align: center;
+        }
+        form {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            width: 70%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #28a745;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .holiday-homes-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .holiday-homes-list li {
+            border-bottom: 1px solid #ccc;
+            padding: 10px 0;
+        }
+        .holiday-homes-list li:last-child {
+            border-bottom: none;
+        }
+        .holiday-home-image {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>AI Recommendations</h1>
+        <form method="get" action="{% url 'ai_recommendation' %}">
+            <input type="text" name="keyword" placeholder="Enter a keyword (e.g., swimming, winter)" value="{{ keyword }}">
+            <button type="submit">Search</button>
+        </form>
+        {% if recommended_homes %}
+            <ul class="holiday-homes-list">
+                {% for home in recommended_homes %}
+                    <li>
+                        <h3>{{ home.1 }}</h3>  <!-- Adjust to match your data structure -->
+                        <p>Location: {{ home.2 }}</p>
+                        <p>Price per night: ${{ home.3 }}</p>
+                        <p>Bedrooms: {{ home.4 }}</p>
+                        <p>Bathrooms: {{ home.5 }}</p>
+                        <p>Capacity: {{ home.6 }}</p>
+                        <p>Description: {{ home.8 }}</p>
+                        <img src="{{ home.6 }}" alt="{{ home.0 }}" class="holiday-home-image">
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No recommendations available. Please enter a keyword to get recommendations.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

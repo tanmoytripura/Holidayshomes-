@@ -1,0 +1,106 @@
+<!-- user_page.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* styles.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+h1 {
+    margin: 0;
+}
+
+.logout-button, .ai-recommendation-button {
+    padding: 10px 20px;
+    background-color: #e74c3c;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-left: 10px;
+}
+
+.ai-recommendation-button {
+    background-color: #3498db;
+}
+
+.holiday-homes-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.holiday-homes-list li {
+    margin: 15px 0;
+    padding: 15px;
+    background: #f9f9f9;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.holiday-home-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+@media (max-width: 800px) {
+    .change{
+        display: flex;
+        flex-direction: column;
+    }
+
+}
+
+    </style>
+    <title>User Page</title>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Welcome, {{ username }}!</h1>
+            <div class="change">
+            <a href="{% url 'ai_recommendation' %}" class="ai-recommendation-button">AI Recommendations</a> 
+            <a href="/logot" class="logout-button">Logout</a>
+            </div>
+        </div>
+        <h2>Holiday Homes</h2>
+        <ul class="holiday-homes-list">
+            {% for home in holiday_homes %}
+                <li>
+                    <h3>{{ home.name }}</h3>
+                    <p>Location: {{ home.location }}</p>
+                    <p>Price per night: ${{ home.price }}</p>
+                    <p>Bedrooms: {{ home.bedrooms }}</p>
+                    <p>Bathrooms: {{ home.bathrooms }}</p>
+                    <p>Capacity: {{ home.capacity }}</p>
+                    <img src="{{ home.image_url }}" alt="{{ home.name }}" class="holiday-home-image">
+                </li>
+            {% empty %}
+                <li>No holiday homes available.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
